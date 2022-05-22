@@ -45,11 +45,14 @@ namespace AddressAPI.Repositories
         // Filtering and Sorting
         public async Task<List<Address>> GetAddressesWithSearching(AddressDTO addressdto)
         {
-            var addresses = from a in _context.Addresses.Where(a => a.Straat == addressdto.Straat || a.Huisnummer == addressdto.Huisnummer || a.Postcode == addressdto.Postcode
-                            || a.Plaats == addressdto.Plaats || a.Land == addressdto.Land)
-                           select a;
+           var addresses = from t in _context.Addresses
+                        where (string.IsNullOrEmpty(addressdto.Straat) || t.Straat == addressdto.Straat) &&
+                                (addressdto.Huisnummer == 0 || t.Huisnummer == addressdto.Huisnummer) &&
+                                (string.IsNullOrEmpty(addressdto.Postcode) || t.Postcode == addressdto.Postcode) &&
+                                (string.IsNullOrEmpty(addressdto.Plaats) || t.Plaats == addressdto.Plaats) &&
+                                (string.IsNullOrEmpty(addressdto.Land) || t.Land == addressdto.Land)
+                            select t;
 
-           
             addresses = addresses.OrderBy(a => a.Straat).ThenByDescending(a => a.Huisnummer);
                 
 
@@ -69,7 +72,7 @@ namespace AddressAPI.Repositories
                 throw new RecordNotFoundException(id);
             }
 
-            _context.Addresses.Remove(addressdb);
+             _context.Addresses.Remove(addressdb);
             
             await _context.SaveChangesAsync();
 

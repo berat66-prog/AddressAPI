@@ -2,6 +2,7 @@ global using AddressAPI.Data;
 global using Microsoft.EntityFrameworkCore;
 using AddressAPI.Interfaces;
 using AddressAPI.Repositories;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    c =>
+    {
+        c.EnableAnnotations();
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "AddressSwaggerDoc", Version = "v1" });
+    });
 
 var app = builder.Build();
 

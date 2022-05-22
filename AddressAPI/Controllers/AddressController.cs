@@ -4,6 +4,7 @@ using AddressAPI.Model;
 using AddressAPI.Interfaces;
 using AddressAPI.Controllers.DTO;
 using AddressAPI.Exception;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AddressAPI.Controllers
 {
@@ -19,13 +20,19 @@ namespace AddressAPI.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllAddresses")]
+        [SwaggerOperation(Summary = "Gets all addresses", Description = "Gets all the addresses data from the database")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Request Successful")]
         public async Task<ActionResult<List<Address>>> Get()
         {
             return Ok(await _addressRepository.GetAllAddressedAsync());
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get address by ID", Description = "Gets a unique address by ID")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Request Successful")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Address with given ID not found in the database")]
+
         public async Task<ActionResult<Address>> GetById(long id)
         {
             try
@@ -43,18 +50,25 @@ namespace AddressAPI.Controllers
         // Filtering and Sorting
 
         [HttpGet("/search")]
+        [SwaggerOperation(Summary = "Filters and sorts", Description = "Filters and sorts the addresses based on given query params")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Request Successful")]
         public async Task<ActionResult<List<Address>>> GetAddressBySearching([FromQuery] AddressDTO addressDTO)
         {
             return Ok(await _addressRepository.GetAddressesWithSearching(addressDTO));
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Saves Address", Description = "Saves an address to the database")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Request Successful")]
         public async Task<ActionResult<Address>> AddAddress(AddressDTO addressDTO)
         {
              return Ok(await _addressRepository.addAddressAsync(addressDTO));
         }
 
         [HttpPut]
+        [SwaggerOperation(Summary = "Modify address", Description = "Makes changes to the address and saves it")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Request Successful")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Address with given ID not found in the database")]
         public async Task<ActionResult<Address>> UpdateAddress(Address address)
         {
             try
@@ -68,6 +82,9 @@ namespace AddressAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete Address", Description = "Deletes an address from the database")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Request Successful")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Address with given ID not found in the database")]
         public async Task<ActionResult<List<Address>>> DeleteAddress(long id)
         {
             try
@@ -78,8 +95,7 @@ namespace AddressAPI.Controllers
                 return NotFound(ex.Message);
             }
         
-            
-        }
+         }
     }   
 
 }

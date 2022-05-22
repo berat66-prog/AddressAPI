@@ -21,7 +21,8 @@ namespace Distances
         public static double calculateDistance()
         {
             string addressPoint1 = "Trumanlaan 307";
-            var gls = new GoogleLocationService("AIzaSyACdAYzS6dUff-JX3xFkAYQLi3oeiCXxrQ");
+            var gls = new GoogleLocationService();
+            //var gls = new GoogleLocationService("AIzaSyACdAYzS6dUff-JX3xFkAYQLi3oeiCXxrQ");
             var latlong = gls.GetLatLongFromAddress(addressPoint1);
 
             var latitude = latlong.Latitude;
