@@ -4,9 +4,12 @@
 
 Instructies voor het opstarten en gebruik van het project:
 
-Clone het project in een IDE. Open de Address.db file in de Data folder met de tool "DB Browser For SQLITE".
+Clone het project in een IDE. Open de Address.db file in de Data folder met de tool "DB Browser For SQLITE". Verander de path naar de db file 
+in de appsettings.json  door de "DefaultConnection" aan te passen  van  de AddresAPI project en Distances project naar de path waarin je het project gecloned hebt.
+Anders wordt de db file niet gevonden en krijg je een error bij het verzenden van een request.
 
-De solution bestaat uit twee projecten namelijk AddressAPI Project en Distances Project. De AddressAPI project word gebruikt om de CRUD operations
+
+ De solution bestaat uit twee projecten namelijk AddressAPI Project en Distances Project. De AddressAPI project word gebruikt om de CRUD operations
 uit te voeren (Deel 1 van de opdracht) en om te filteren en te sorteren(deel 2 van de opdracht). Het project "Distances" binnen de solution wordt gebruikt
 om de afstand in km tussen twee adressen te berekenen (Deel 3 van de opdracht).
 
