@@ -18,7 +18,7 @@ namespace Distances.Model
         public string CalculateDistance(Address point1, Address point2)
         {
 
-            var gls = new GoogleLocationService("AIzaSyACdAYzS6dUff-JX3xFkAYQLi3oeiCXxrQ");
+            var gls = new GoogleLocationService(GOOGLE_MAPS_API_KEY);
             var latlong = gls.GetLatLongFromAddress(point1.GetFullAddressAsString());
             var latlong2 = gls.GetLatLongFromAddress(point2.GetFullAddressAsString());
 
